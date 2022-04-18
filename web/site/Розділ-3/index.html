@@ -1,0 +1,532 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Volodymyr Smahliuk">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+    
+    
+      
+        <title>ВИКОРИСТАННЯ KUBERNETES КЛАСТЕРУ ДЛЯ ЕФЕКТИВНОГО УПРАЛІННЯ РЕСУРСАМИ СТАЦІОНАРНИХ І МОБІЛЬНИХ ПРИСТРОЇВ ТА ПРИСТРОЇВ ІНТЕРНЕТУ РЕЧЕЙ - Операторські платформи надання послуг</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.120efc48.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#kubernetes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Операторські платформи надання послуг" class="md-header__button md-logo" aria-label="Операторські платформи надання послуг" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Операторські платформи надання послуг
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ВИКОРИСТАННЯ KUBERNETES КЛАСТЕРУ ДЛЯ ЕФЕКТИВНОГО УПРАЛІННЯ РЕСУРСАМИ СТАЦІОНАРНИХ І МОБІЛЬНИХ ПРИСТРОЇВ ТА ПРИСТРОЇВ ІНТЕРНЕТУ РЕЧЕЙ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Операторські платформи надання послуг" class="md-nav__button md-logo" aria-label="Операторські платформи надання послуг" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Операторські платформи надання послуг
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Інформаційний сайт дослідження
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          Розділ 1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Розділ 1" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Розділ 1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%D0%A0%D0%BE%D0%B7%D0%B4%D1%96%D0%BB-1/" class="md-nav__link">
+        ПРОСТОЮВАННЯ РЕСУРСІВ, АКТУАЛЬНІСТЬ ПИТАННЯ, ІСНУЮЧІ ПІДХОДИ ДЛЯ ВИРІШЕННЯ.
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Розділ 2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Розділ 2" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Розділ 2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%D0%A0%D0%BE%D0%B7%D0%B4%D1%96%D0%BB-2/" class="md-nav__link">
+        АНАЛІЗ ІСНУЮЧИХ ТЕХНОЛОГІЙ ДЛЯ НАЛАШТУВАННЯ ТА УПРАВЛІННЯ РЕСУРСАМИ КЛАСТЕРНОЇ ІНФРАСТРУКТУРИ
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Розділ 3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Розділ 3" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Розділ 3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ВИКОРИСТАННЯ KUBERNETES КЛАСТЕРУ ДЛЯ ЕФЕКТИВНОГО УПРАЛІННЯ РЕСУРСАМИ СТАЦІОНАРНИХ І МОБІЛЬНИХ ПРИСТРОЇВ ТА ПРИСТРОЇВ ІНТЕРНЕТУ РЕЧЕЙ
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ВИКОРИСТАННЯ KUBERNETES КЛАСТЕРУ ДЛЯ ЕФЕКТИВНОГО УПРАЛІННЯ РЕСУРСАМИ СТАЦІОНАРНИХ І МОБІЛЬНИХ ПРИСТРОЇВ ТА ПРИСТРОЇВ ІНТЕРНЕТУ РЕЧЕЙ
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes_1" class="md-nav__link">
+    Архітектура та основні компоненти Kubernetes кластеру
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#k8s" class="md-nav__link">
+    Компоненти K8s
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    Централізоване оновлення програмного забезпечення
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kubernetes_2" class="md-nav__link">
+    Розгортання експериментального макету на основі Kubernetes кластеру
+  </a>
+  
+    <nav class="md-nav" aria-label="Розгортання експериментального макету на основі Kubernetes кластеру">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    Ініціалізація гетерогенного кластеру
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    Розгортання моніторингової системи
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    Імітація критичних ситуацій та тестування імітаційної корпоративної системи.
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    Висновок
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="kubernetes">ВИКОРИСТАННЯ KUBERNETES КЛАСТЕРУ ДЛЯ ЕФЕКТИВНОГО УПРАЛІННЯ РЕСУРСАМИ СТАЦІОНАРНИХ І МОБІЛЬНИХ ПРИСТРОЇВ ТА ПРИСТРОЇВ ІНТЕРНЕТУ РЕЧЕЙ</h1>
+<h2 id="kubernetes_1">Архітектура та основні компоненти Kubernetes кластеру</h2>
+<p>Kubernetes - це портативна, розширювана платформа з відкритим вихідним кодом для управління контейнерними робочими елементами (робочими навантаженнями) та сервісами, що полегшує декларативну конфігурацію та автоматизацію. Kubernetes допомагає керувати контейнерами, що запускають застосунок, і слідкувати, щоб не було збоїв у роботі. Для цього ПЗ надається фреймворк для запуску розподілених систем без перебоїв.</p>
+<h2 id="k8s">Компоненти K8s</h2>
+<p><img alt="components" src="https://d33wubrfki0l68.cloudfront.net/7016517375d10c702489167e704dcb99e570df85/7bb53/images/docs/components-of-kubernetes.png" /></p>
+<h2 id="_1">Централізоване оновлення програмного забезпечення</h2>
+<p>Для реалізації гнучкого та динамічного налаштування програмного забезпечення на елементах кластерної системи, було прийнято рішення про використання додаткового інструменту Ansible.
+Ansible - це програмне забезпечення, що надає засоби для управління конфігурацією, оркестровки, централізованої установки застосунків і паралельного виконання типових завдань на групі систем або елементів.</p>
+<p><img alt="ansible" src="https://miro.medium.com/max/875/1*v7l8J0w2u7L__B7zDKzpqQ.png" /></p>
+<h2 id="kubernetes_2">Розгортання експериментального макету на основі Kubernetes кластеру</h2>
+<h3 id="_2">Ініціалізація гетерогенного кластеру</h3>
+<p>Експериментальний макет містить один головний вузол, два робочі вузли та додатковий сервер керування (control server) з встановленим програмним забезпеченням Ansible, що допомагає поширювати команди на елементи кластеру централізовано.</p>
+<p><img alt="kubernetes-init" src="https://miro.medium.com/max/1151/1*vxtANihbv7dgnkJ2ioPSxw.png" /></p>
+<h3 id="_3">Розгортання моніторингової системи</h3>
+<p>Kubernetes кластер оперує власними маніфестами у форматі yaml. Система реалізує декларативний підхід до налаштування оточення. Це означає, що користувачу необхідно лише вказати що розгорнути та скільки копій. Також можна вказати додаткові параметри (обмеження по пам'яті, спільні файлові системи тощо), які будуть визначати даний екземпляр, але цього достатньо для початкового налаштування.</p>
+<p><img alt="Prometheus" src="https://assets.balena.io/blog-common/archive/2019/05/node-exporter.png" /></p>
+<h2 id="_4">Імітація критичних ситуацій та тестування імітаційної корпоративної системи.</h2>
+<p><img alt="chaos-kubernetes" src="https://blog.flant.com/wp-content/uploads/sites/2/2021/03/flant-chaos-engineering.png" /></p>
+<p>Варто зазначити, що розгортання додаткових контейнерів не займає одразу усі доступні ресурси. Аплікація має певні межі у використанні cpu/memory, які ми самі можемо задати. При цьому, ресурси будуть виділятися поступово, а не статично. Динамічний розподіл ресурсів є <strong>значною перевагою контейнерів над віртуальними машинами</strong>, оскільки це вбудована особливість і керується хостовою операційною системою, на відміну від ВМ.</p>
+<p><img alt="chaos-kubernetes-overloaded" src="https://miro.medium.com/max/1400/0*Qn9oEBL7bQ_ZYO1B" /></p>
+<h2 id="_5">Висновок</h2>
+<p>Kunernetes кластер може здатися досить складно на перший погляд технологію. На початку розділу 3 було наведено основні його компоненти, кожен з яких виконує свою конкретну роль у системі. Проте, перевага ПЗ Kubernetes полягає у тому, що більшість складних процесів, що відбуваються на найнижчому рівні огорнуті в декілька рядів абстракцій, що дозволяє у досить швидкий термін опанувати технологію та працювати з нею. Даний підхід дозволяє за необхідності дуже точно налаштувати кожен аспект системи. Проте, у більшості випадків Kubernetes надає ряд готових конфігурацій, які задовольняють базові потреби інженерів, які проектують систему.</p>
+<p>Експериментальна система надає змогу зручно налаштовувати системи моніторингу, такі як Prometheus/Grafana, та систему управляння Ansible для кластера. Якщо ви можете запустити свою програму у контейнеризованому середовищі, отже вона буде сумісна з Kubernetes також.</p>
+<p>Конфігураційні файли та маніфести Ansible необхідно вдосконалювати, щоб враховувати більше ймовірних сценарії розгортання, проте навіть таке першочергове налаштування, яке наведено у розділі 3, полегшує процес розгортання програмного забезпечення та приєднання нових вузлів у кластер.</p>
+<p>Об'єкт дослідження, а саме Kubernetes кластер, дозволяє абстрагуватися від різного програмного та апаратного забезпечення пристроїв. У дипломній роботі це досягнуто за допомогою об'єднання операційних систем Ubuntu та Raspbian. Важливо зазначити, що було продемонстровано можливість використання пристроїв інтернету речей як вузлів розподіленої обчислювальної системи у Kubernetes кластері.</p>
+<p>Шляхом ручного знищування подів я довів декларативний підхід Kubernetes, а саме, що необхідно тільки вказати параметри системи, а саме ПЗ забезпечення буде намагатися тримати оточення у близькому до описаного стану. Таким чином, проведені тести, по критичним збоям у функціонуванні аплікації відображають слідуючий за ним процес відновлення аплікацій.</p>
+<p>Наостанок, перевагою створеної системи є те, що ресурси обчислювальних вузлів розподіляються динамічно. Це дозволяє одночасно використовувати комп'ютерний пристрій у стаціонарних задачах, так і одночасно розгортати контейнеризовані додатки для прикладних програм.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../%D0%A0%D0%BE%D0%B7%D0%B4%D1%96%D0%BB-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: АНАЛІЗ ІСНУЮЧИХ ТЕХНОЛОГІЙ ДЛЯ НАЛАШТУВАННЯ ТА УПРАВЛІННЯ РЕСУРСАМИ КЛАСТЕРНОЇ ІНФРАСТРУКТУРИ" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              АНАЛІЗ ІСНУЮЧИХ ТЕХНОЛОГІЙ ДЛЯ НАЛАШТУВАННЯ ТА УПРАВЛІННЯ РЕСУРСАМИ КЛАСТЕРНОЇ ІНФРАСТРУКТУРИ
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["toc.integrate"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      
+    
+  </body>
+</html>
