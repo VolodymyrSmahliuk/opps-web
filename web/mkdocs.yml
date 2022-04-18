@@ -1,0 +1,16 @@
+site_name: Операторські платформи надання послуг 
+site_author: Volodymyr Smahliuk
+
+theme:
+  name: material
+  favicon: assets/images/favicon.ico
+  features:
+    - toc.integrate
+    # - navigation.indexes
+    # - navigation.expand
+    # - navigation.sections
+
+
+markdown_extensions:
+  # HTML style support
+  - attr_list
